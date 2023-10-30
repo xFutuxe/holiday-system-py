@@ -14,10 +14,6 @@ cursor = connection.cursor()
 now = datetime.now()
 current_time = now.strftime("%H:%M %p") # Formats time
 
-
-    
-
-
             
 def homePage(x):
     Maincanvas.destroy()
@@ -55,20 +51,25 @@ def homePage(x):
 
 
     # Does user have a admin or 
-    adminStatement = f"SELECT username from staff WHERE username='{x}' AND role='admin' OR role='manager';"
+    adminStatement = f"SELECT username='{x}' from staff WHERE role='admin';"
     cursor.execute(adminStatement)
-    if not cursor.fetchone():
-        Topcanvas.itemconfig(notLoggedIn, text="Support Staff")
+    result = cursor.fetchall()
+    print(result)
+    if result == (1,):
+        Topcanvas.itemconfig(notLoggedIn, text="Admin Enabled")
         Topcanvas.place(relx=0.5,anchor=tk.N)
-    else:
+    elif result == (0,):
         Topcanvas.place(relx=0.5,anchor=tk.N)
-        Topcanvas.itemconfig(notLoggedIn, text="Admin enabled")
+        Topcanvas.delete(notLoggedIn)
         
 def calendar():
      pass
 
 def customerManage():
      pass
+
+    
+
 
 if __name__ == "__main__":
 
@@ -137,7 +138,6 @@ if __name__ == "__main__":
     
 
          
-
 
 
 
